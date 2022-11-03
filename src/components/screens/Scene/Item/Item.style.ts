@@ -4,6 +4,7 @@ import Image from "next/image";
 export const ItemWrapper = styled('div')`
   background-color: transparent;
   position: relative;
+  z-index: 100;
 `
 
 export const ItemCount = styled('div')`

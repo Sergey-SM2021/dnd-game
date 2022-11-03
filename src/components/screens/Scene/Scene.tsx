@@ -1,7 +1,7 @@
 import {Cookie, Cell, Items, Store, Wrapper} from "./Scene.style";
 import rightCookie from "assets/Cookie/CookieRight.png";
 import cookieLeft from "assets/Cookie/CookieLeft.png";
-import {DragEvent, useContext, useEffect, useRef, useState} from "react";
+import {DragEvent, SyntheticEvent, useContext, useEffect, useRef, useState} from "react";
 import {SettingsContext} from "provider";
 import {Item} from "./Item/Item";
 import cookie from "assets/Cookie/Cookie1.png";
@@ -56,14 +56,22 @@ export const Scene = () => {
         setStore(store => [...store].map((el, i) => i === index ? current as IItem : el))
     }
     const handlerSoredItemDrag = (item:IItem) => {
+        setCurrent(item)
     }
-    return (<Wrapper>
+    const handlerBgDrop = (e:DragEvent<HTMLDivElement>) => {
+        e.preventDefault()
+        setStore(store => [...store].map(el => el.id === current?.id ? {...el,value:''} : el))
+    }
+    const handlerDropInStore = (e:SyntheticEvent<HTMLDivElement>) => {
+        e.stopPropagation()
+    }
+    return (<Wrapper onDrop={handlerBgDrop} onDragOver={handlerDragOver}>
         <Cookie draggable={false} src={rightCookie} alt={"pieces background"} width={100} height={100}/>
         <Cookie isLeft draggable={false} src={cookieLeft} alt={"pieces background"} width={300} height={300}/>
         <Items>{items.map(item => <Item item={item}
                                         onDragStart={(e: DragEvent<HTMLDivElement>) => handlerDragStart(e, item)}/>)}</Items>
-        <Store>
-            {store.map((item, index) => item.src ? <Item item={item} onDragStart={()=>handlerSoredItemDrag(item)}/> : <Cell
+        <Store onDrop={handlerDropInStore}>
+            {store.map((item, index) => item.value ? <Item item={item} onDragStart={()=>handlerSoredItemDrag(item)}/> : <Cell
                 draggable
                 onDrop={(event: DragEvent<HTMLDivElement>) => handlerDrop(event, index)}
                 onDragOver={(event: DragEvent<HTMLDivElement>) => handlerDragOver(event)}
