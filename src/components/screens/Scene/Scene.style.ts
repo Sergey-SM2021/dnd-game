@@ -51,33 +51,9 @@ export const Cell = styled('div')`
   background-image: radial-gradient(white,black);
 `
 
-export const Item = styled(Image)`
-    display: block;
-    position: relative;
-`
-
 export const Items = styled('div')`
   padding-top: 5%;
   justify-content: center;
   display: flex;
   gap: 5%;
-`
-
-export const ItemWrapper = styled('div')`
-  background-color: transparent;
-  position: relative;
-`
-
-export const ItemCount = styled('div')`
-  font-size: 2rem;
-  font-weight: 700;
-  position: absolute;
-  z-index: 1;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: transparent;
-  color: #ffffff;
-  text-shadow: 2px 0 black, -2px 0 black, 0 2px black, 0 -2px black,
-  1px 1px black, -1px -1px black, 1px -1px black, -1px 1px black;
 `
